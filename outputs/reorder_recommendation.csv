@@ -1,0 +1,101 @@
+Store ID,Product ID,Category,Inventory Level,Demand Forecast,risk_status,reorder_trigger,recommended_order_qty
+S004,P0001,Electronics,497,489.62,Balanced,False,42.0
+S003,P0010,Furniture,413,409.17,Balanced,False,37.0
+S004,P0002,Furniture,181,192.84,Understocked,True,31.0
+S002,P0014,Clothing,342,335.72,Balanced,False,27.0
+S004,P0020,Toys,249,248.08,Balanced,False,24.0
+S001,P0019,Clothing,149,154.83,Understocked,True,21.0
+S005,P0003,Furniture,98,105.61,Understocked,True,18.0
+S004,P0008,Furniture,390,368.91,Balanced,False,16.0
+S001,P0003,Toys,69,76.85,Understocked,True,16.0
+S003,P0007,Electronics,108,108.96,Understocked,True,12.0
+S002,P0006,Toys,160,151.48,Balanced,False,7.0
+S003,P0012,Clothing,108,101.2,Balanced,False,3.0
+S004,P0012,Clothing,85,63.69,Balanced,False,0.0
+S004,P0013,Electronics,113,10.72,Excess Inventory,False,0.0
+S004,P0011,Groceries,155,123.65,Balanced,False,0.0
+S004,P0010,Toys,382,121.11,Excess Inventory,False,0.0
+S004,P0009,Clothing,115,66.94,High Inventory,False,0.0
+S001,P0001,Toys,223,53.56,Excess Inventory,False,0.0
+S004,P0005,Toys,217,103.44,Excess Inventory,False,0.0
+S004,P0007,Electronics,134,116.06,Balanced,False,0.0
+S004,P0006,Toys,364,204.6,High Inventory,False,0.0
+S004,P0015,Toys,56,0.0,Excess Inventory,False,0.0
+S004,P0004,Furniture,105,4.48,Excess Inventory,False,0.0
+S004,P0003,Furniture,419,62.83,Excess Inventory,False,0.0
+S003,P0020,Groceries,417,285.8,Balanced,False,0.0
+S003,P0019,Electronics,253,197.49,Balanced,False,0.0
+S003,P0018,Electronics,375,211.88,High Inventory,False,0.0
+S003,P0017,Clothing,239,56.25,Excess Inventory,False,0.0
+S004,P0014,Furniture,386,187.8,Excess Inventory,False,0.0
+S004,P0018,Toys,83,6.92,Excess Inventory,False,0.0
+S004,P0016,Clothing,314,193.14,High Inventory,False,0.0
+S005,P0010,Toys,308,186.5,High Inventory,False,0.0
+S005,P0019,Toys,374,270.52,Balanced,False,0.0
+S005,P0018,Clothing,278,39.65,Excess Inventory,False,0.0
+S005,P0017,Toys,313,48.43,Excess Inventory,False,0.0
+S005,P0016,Furniture,96,18.46,Excess Inventory,False,0.0
+S005,P0015,Furniture,408,336.64,Balanced,False,0.0
+S005,P0014,Toys,328,183.97,High Inventory,False,0.0
+S005,P0013,Electronics,389,277.27,Balanced,False,0.0
+S005,P0012,Electronics,495,317.46,High Inventory,False,0.0
+S005,P0011,Groceries,156,137.12,Balanced,False,0.0
+S005,P0009,Furniture,319,209.03,High Inventory,False,0.0
+S004,P0017,Electronics,100,20.44,Excess Inventory,False,0.0
+S005,P0008,Electronics,409,287.34,Balanced,False,0.0
+S005,P0007,Groceries,59,3.95,Excess Inventory,False,0.0
+S005,P0006,Furniture,491,175.4,Excess Inventory,False,0.0
+S005,P0005,Toys,372,150.53,Excess Inventory,False,0.0
+S005,P0004,Toys,158,85.16,High Inventory,False,0.0
+S005,P0002,Groceries,253,104.84,Excess Inventory,False,0.0
+S005,P0001,Toys,300,201.1,Balanced,False,0.0
+S004,P0019,Clothing,65,43.07,High Inventory,False,0.0
+S003,P0015,Clothing,270,179.11,High Inventory,False,0.0
+S003,P0016,Furniture,166,143.94,Balanced,False,0.0
+S003,P0011,Toys,137,98.4,Balanced,False,0.0
+S003,P0014,Electronics,230,85.49,Excess Inventory,False,0.0
+S001,P0014,Groceries,293,230.89,Balanced,False,0.0
+S002,P0004,Toys,133,51.71,Excess Inventory,False,0.0
+S002,P0003,Clothing,372,111.59,Excess Inventory,False,0.0
+S002,P0002,Groceries,364,43.42,Excess Inventory,False,0.0
+S002,P0001,Clothing,415,27.2,Excess Inventory,False,0.0
+S001,P0020,Electronics,242,50.82,Excess Inventory,False,0.0
+S001,P0018,Electronics,191,25.01,Excess Inventory,False,0.0
+S001,P0017,Toys,282,201.4,Balanced,False,0.0
+S001,P0016,Electronics,74,27.53,Excess Inventory,False,0.0
+S001,P0015,Electronics,356,255.33,Balanced,False,0.0
+S001,P0013,Groceries,356,225.48,High Inventory,False,0.0
+S003,P0013,Groceries,388,131.32,Excess Inventory,False,0.0
+S001,P0012,Electronics,213,61.33,Excess Inventory,False,0.0
+S001,P0011,Electronics,449,33.03,Excess Inventory,False,0.0
+S001,P0010,Furniture,167,86.62,High Inventory,False,0.0
+S001,P0009,Electronics,167,28.21,Excess Inventory,False,0.0
+S001,P0008,Electronics,315,226.38,Balanced,False,0.0
+S001,P0007,Clothing,256,25.06,Excess Inventory,False,0.0
+S001,P0006,Electronics,305,91.48,Excess Inventory,False,0.0
+S001,P0005,Groceries,471,266.62,High Inventory,False,0.0
+S001,P0004,Groceries,338,192.43,High Inventory,False,0.0
+S002,P0005,Toys,464,198.35,Excess Inventory,False,0.0
+S002,P0007,Toys,53,0.0,Excess Inventory,False,0.0
+S002,P0008,Furniture,218,51.52,Excess Inventory,False,0.0
+S002,P0009,Electronics,62,38.26,High Inventory,False,0.0
+S001,P0002,Furniture,217,101.47,Excess Inventory,False,0.0
+S003,P0009,Furniture,496,13.36,Excess Inventory,False,0.0
+S003,P0008,Furniture,103,82.87,Balanced,False,0.0
+S003,P0006,Furniture,451,372.01,Balanced,False,0.0
+S003,P0005,Electronics,411,298.09,Balanced,False,0.0
+S003,P0004,Groceries,415,54.9,Excess Inventory,False,0.0
+S003,P0003,Groceries,112,0.58,Excess Inventory,False,0.0
+S003,P0002,Groceries,388,234.86,High Inventory,False,0.0
+S003,P0001,Clothing,138,119.97,Balanced,False,0.0
+S002,P0020,Groceries,284,222.74,Balanced,False,0.0
+S002,P0019,Furniture,409,230.12,High Inventory,False,0.0
+S002,P0018,Groceries,151,33.33,Excess Inventory,False,0.0
+S002,P0017,Toys,236,4.01,Excess Inventory,False,0.0
+S002,P0016,Toys,258,107.61,Excess Inventory,False,0.0
+S002,P0015,Toys,433,186.13,Excess Inventory,False,0.0
+S002,P0013,Electronics,472,27.31,Excess Inventory,False,0.0
+S002,P0012,Electronics,193,139.71,Balanced,False,0.0
+S002,P0011,Groceries,156,53.05,Excess Inventory,False,0.0
+S002,P0010,Toys,419,346.37,Balanced,False,0.0
+S005,P0020,Groceries,117,2.33,Excess Inventory,False,0.0

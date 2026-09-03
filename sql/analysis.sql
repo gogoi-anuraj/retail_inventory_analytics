@@ -310,19 +310,20 @@ WHERE demand_forecast > 0;
 -- 3.8 INVENTORY RISK DISTRIBUTION
 -- ============================================================
 
--- Risk thresholds:
--- < 1x forecast  = Understocked
--- 1-2x forecast  = Balanced
--- 2-4x forecast  = High Inventory
--- >= 4x forecast = Excess Inventory
+-- Canonical risk thresholds (used consistently across this file,
+-- the reorder recommendation query, and the Streamlit dashboard):
+-- < 1.0x forecast   = Understocked
+-- 1.0-1.5x forecast = Balanced
+-- 1.5-2.0x forecast = High Inventory
+-- > 2.0x forecast   = Excess Inventory
 
 SELECT
     CASE
         WHEN inventory_level / NULLIF(demand_forecast, 0) < 1
             THEN 'Understocked'
-        WHEN inventory_level / NULLIF(demand_forecast, 0) < 2
+        WHEN inventory_level / NULLIF(demand_forecast, 0) <= 1.5
             THEN 'Balanced'
-        WHEN inventory_level / NULLIF(demand_forecast, 0) < 4
+        WHEN inventory_level / NULLIF(demand_forecast, 0) <= 2
             THEN 'High Inventory'
         ELSE 'Excess Inventory'
     END AS inventory_risk,
@@ -350,34 +351,30 @@ ORDER BY
 -- ============================================================
 -- 3.9 INVENTORY RISK BY STORE
 -- ============================================================
+-- Uses the same canonical 4-tier classification as 3.8, so results
+-- are comparable across every "risk by X" query in this file.
 
 SELECT
     store_id,
     COUNT(*) AS valid_observations,
 
-    SUM(
-        CASE
-            WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-            THEN 1
-            ELSE 0
-        END
-    ) AS high_inventory_observations,
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) < 1
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS understocked_pct,
 
-    ROUND(
-        100.0 * SUM(
-            CASE
-                WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-                THEN 1
-                ELSE 0
-            END
-        ) / COUNT(*),
-        2
-    ) AS high_inventory_pct
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) BETWEEN 1 AND 1.5
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS balanced_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 1.5
+                            AND inventory_level / NULLIF(demand_forecast, 0) <= 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS high_inventory_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS excess_inventory_pct
 
 FROM inventory_sales
 WHERE demand_forecast > 0
 GROUP BY store_id
-ORDER BY high_inventory_pct DESC;
+ORDER BY understocked_pct DESC;
 
 
 -- ============================================================
@@ -388,29 +385,23 @@ SELECT
     category,
     COUNT(*) AS valid_observations,
 
-    SUM(
-        CASE
-            WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-            THEN 1
-            ELSE 0
-        END
-    ) AS high_inventory_observations,
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) < 1
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS understocked_pct,
 
-    ROUND(
-        100.0 * SUM(
-            CASE
-                WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-                THEN 1
-                ELSE 0
-            END
-        ) / COUNT(*),
-        2
-    ) AS high_inventory_pct
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) BETWEEN 1 AND 1.5
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS balanced_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 1.5
+                            AND inventory_level / NULLIF(demand_forecast, 0) <= 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS high_inventory_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS excess_inventory_pct
 
 FROM inventory_sales
 WHERE demand_forecast > 0
 GROUP BY category
-ORDER BY high_inventory_pct DESC;
+ORDER BY understocked_pct DESC;
 
 
 -- ============================================================
@@ -420,33 +411,26 @@ ORDER BY high_inventory_pct DESC;
 SELECT
     product_id,
     COUNT(*) AS valid_observations,
-
     ROUND(AVG(inventory_level), 2) AS avg_inventory,
     ROUND(AVG(demand_forecast), 2) AS avg_demand_forecast,
 
-    SUM(
-        CASE
-            WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-            THEN 1
-            ELSE 0
-        END
-    ) AS high_inventory_observations,
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) < 1
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS understocked_pct,
 
-    ROUND(
-        100.0 * SUM(
-            CASE
-                WHEN inventory_level / NULLIF(demand_forecast, 0) >= 2
-                THEN 1
-                ELSE 0
-            END
-        ) / COUNT(*),
-        2
-    ) AS high_inventory_pct
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) BETWEEN 1 AND 1.5
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS balanced_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 1.5
+                            AND inventory_level / NULLIF(demand_forecast, 0) <= 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS high_inventory_pct,
+
+    ROUND(100.0 * SUM(CASE WHEN inventory_level / NULLIF(demand_forecast, 0) > 2
+        THEN 1 ELSE 0 END) / COUNT(*), 2) AS excess_inventory_pct
 
 FROM inventory_sales
 WHERE demand_forecast > 0
 GROUP BY product_id
-ORDER BY high_inventory_pct DESC;
+ORDER BY understocked_pct DESC;
 
 
 -- ============================================================
@@ -823,3 +807,133 @@ WHERE demand_forecast >= 0
 GROUP BY weather_condition
 
 ORDER BY avg_units_sold DESC;
+
+
+-- 4. PRODUCT MOVEMENT SEGMENTATION 
+
+-- 4.1 Product-level movement metrics
+SELECT
+    product_id,
+    SUM(units_sold) AS total_units_sold,
+    ROUND(SUM(units_sold) / COUNT(DISTINCT date), 2) AS avg_daily_units_sold,
+    ROUND(AVG(inventory_level), 2) AS avg_inventory,
+    ROUND(AVG(units_sold) / NULLIF(AVG(inventory_level), 0), 3) AS inventory_turnover_proxy,
+    SUM(CASE WHEN units_sold > 0 THEN 1 ELSE 0 END) AS active_selling_days,
+    ROUND(
+        100.0 * SUM(CASE WHEN inventory_level < demand_forecast THEN 1 ELSE 0 END)
+        / COUNT(*), 2
+    ) AS low_inventory_risk_rate
+FROM inventory_sales
+GROUP BY product_id
+ORDER BY total_units_sold DESC;
+
+
+-- 4.2 Movement segmentation using NTILE (tercile split on turnover proxy)
+-- NOTE: turnover proxy range across products in this dataset is narrow
+-- (~0.49-0.51) — segmentation is directionally valid but differentiation
+-- is weak. Document this limitation when presenting findings.
+WITH product_metrics AS (
+    SELECT
+        product_id,
+        SUM(units_sold) AS total_units_sold,
+        ROUND(AVG(inventory_level), 2) AS avg_inventory,
+        AVG(units_sold) / NULLIF(AVG(inventory_level), 0) AS inventory_turnover_proxy,
+        ROUND(
+            100.0 * SUM(CASE WHEN inventory_level < demand_forecast THEN 1 ELSE 0 END)
+            / COUNT(*), 2
+        ) AS low_inventory_risk_rate
+    FROM inventory_sales
+    GROUP BY product_id
+),
+ranked AS (
+    SELECT
+        *,
+        NTILE(3) OVER (ORDER BY inventory_turnover_proxy) AS turnover_tercile
+    FROM product_metrics
+)
+SELECT
+    product_id,
+    total_units_sold,
+    avg_inventory,
+    ROUND(inventory_turnover_proxy, 3) AS inventory_turnover_proxy,
+    low_inventory_risk_rate,
+    CASE turnover_tercile
+        WHEN 1 THEN 'Slow-moving'
+        WHEN 2 THEN 'Medium-moving'
+        WHEN 3 THEN 'Fast-moving'
+    END AS movement_segment
+FROM ranked
+ORDER BY inventory_turnover_proxy DESC;
+
+
+-- 4.3 Segment-level summary
+WITH product_metrics AS (
+    SELECT
+        product_id,
+        SUM(units_sold) AS total_units_sold,
+        ROUND(AVG(inventory_level), 2) AS avg_inventory,
+        AVG(units_sold) / NULLIF(AVG(inventory_level), 0) AS inventory_turnover_proxy,
+        ROUND(
+            100.0 * SUM(CASE WHEN inventory_level < demand_forecast THEN 1 ELSE 0 END)
+            / COUNT(*), 2
+        ) AS low_inventory_risk_rate
+    FROM inventory_sales
+    GROUP BY product_id
+),
+segmented AS (
+    SELECT
+        *,
+        CASE NTILE(3) OVER (ORDER BY inventory_turnover_proxy)
+            WHEN 1 THEN 'Slow-moving'
+            WHEN 2 THEN 'Medium-moving'
+            WHEN 3 THEN 'Fast-moving'
+        END AS movement_segment
+    FROM product_metrics
+)
+SELECT
+    movement_segment,
+    COUNT(*) AS num_products,
+    ROUND(AVG(total_units_sold), 0) AS avg_total_units_sold,
+    ROUND(AVG(avg_inventory), 2) AS avg_inventory,
+    ROUND(AVG(inventory_turnover_proxy), 3) AS avg_turnover_proxy,
+    ROUND(AVG(low_inventory_risk_rate), 2) AS avg_low_inventory_risk_rate
+FROM segmented
+GROUP BY movement_segment
+ORDER BY avg_turnover_proxy DESC;
+
+
+-- 5. REORDER RECOMMENDATION
+-- Reorder trigger  : inventory_level < demand_forecast
+-- Recommended qty  : only computed once triggered, with a 10% buffer
+--                    applied to demand_forecast. The buffer size is a
+--                    documented assumption, informally motivated by the
+--                    forecast error (MAPE) measured in section 3.12-3.15 -
+--                    it is not derived from lead-time or safety-stock theory,
+--                    since no lead-time data is available in this dataset.
+-- risk_status uses the same canonical 1x/1.5x/2x thresholds as section 3.8.
+
+WITH latest AS (
+    SELECT MAX(date) AS max_date FROM inventory_sales
+)
+SELECT
+    store_id,
+    product_id,
+    category,
+    region,
+    inventory_level,
+    demand_forecast,
+    CASE
+        WHEN inventory_level < demand_forecast THEN 'Understocked'
+        WHEN inventory_level <= 1.5 * demand_forecast THEN 'Balanced'
+        WHEN inventory_level <= 2 * demand_forecast THEN 'High Inventory'
+        ELSE 'Excess Inventory'
+    END AS risk_status,
+    (inventory_level < demand_forecast) AS reorder_trigger,
+    CASE
+        WHEN inventory_level < demand_forecast
+            THEN GREATEST(ROUND(demand_forecast * 1.10 - inventory_level, 0), 0)
+        ELSE 0
+    END AS recommended_order_qty
+FROM inventory_sales
+JOIN latest ON date = latest.max_date
+ORDER BY recommended_order_qty DESC;
