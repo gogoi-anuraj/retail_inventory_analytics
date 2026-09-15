@@ -35,15 +35,15 @@ retail_inventory_analytics/
 │   ├── inventory_schema.png             # flat-schema diagram
 │   └── inventory_schema_normalized.png  # normalized multi-table diagram
 ├── plots/
-│   └── 13 PNGs                # curated static charts, one per key finding — see plots/README.md
+│   └── PNGs                # curated static charts, one per key finding — see plots/README.md
 ├── plots_from_db/
 │   ├── db_connection.py       # shared MySQL connection (mysql.connector)
 │   └── 4 scripts              # same charts as plots/, but queried live from MySQL instead of the CSV
 ├── outputs/
-│   ├── data_quality_summary.md   # Phase 1 cleaning decisions and their justification
+│   ├── data_quality_summary.md   # cleaning decisions and their justification
 │   ├── data_dictionary.md        # every column: type, meaning, valid range, cleaning notes
 │   ├── recommendations.md        # 5 business recommendations (Problem/Evidence/Action/Benefit/Risk)
-│   └── executive_summary.md      # 1-page summary: findings, actions, limitations
+│   └── executive_summary.md      # summary: findings, actions, limitations
 └── requirements.txt
 ```
 
