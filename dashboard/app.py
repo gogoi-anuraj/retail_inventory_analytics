@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from pathlib import Path
 
 st.set_page_config(
     page_title="Retail Inventory Analytics",
@@ -22,7 +23,7 @@ SEGMENT_COLORS = {
     "Slow-moving": "#EF553B",
 }
 
-DATA_PATH = "../data/processed/retail_store_inventory_clean.csv"
+DATA_PATH = Path(__file__).parent.parent / "data" / "processed" / "retail_store_inventory_clean.csv"
 
 
 # ============================================================
