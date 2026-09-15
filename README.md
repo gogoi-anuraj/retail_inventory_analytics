@@ -44,7 +44,7 @@ retail_inventory_analytics/
 │   ├── data_dictionary.md        # every column: type, meaning, valid range, cleaning notes
 │   ├── recommendations.md        # 5 business recommendations (Problem/Evidence/Action/Benefit/Risk)
 │   └── executive_summary.md      # summary: findings, actions, limitations
-└── requirements.txt
+└── requirements-dev.txt          
 ```
 
 ---
@@ -218,4 +218,4 @@ what every "risk" or "reorder" number actually means:
 ## Tech Stack
 
 Python (pandas, matplotlib), MySQL 8.0, Streamlit + Plotly for the
-dashboard. See `requirements.txt` for exact packages.
+dashboard.
