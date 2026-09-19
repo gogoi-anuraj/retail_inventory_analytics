@@ -1,4 +1,4 @@
-# Retail Inventory Analytics
+ Retail Inventory Analytics
 
 An end-to-end SQL + Python analytics project on a two-year, multi-store
 retail inventory dataset — from raw-data cleaning through SQL analysis, a
