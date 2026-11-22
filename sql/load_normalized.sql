@@ -2,9 +2,7 @@
 -- ETL: populate the normalized schema from the raw CSV
 -- Run this AFTER schema_normalized.sql
 --
--- IMPORTANT (found when testing against real MySQL 8.0, not just
--- MariaDB): MySQL defaults `local_infile` to OFF, unlike MariaDB which
--- defaults it to ON. LOAD DATA LOCAL INFILE below will fail with
+-- IMPORTANT: MySQL defaults `local_infile` to OFF. LOAD DATA LOCAL INFILE below will fail with
 -- "Loading local data is disabled" unless BOTH of these are true:
 --   1. Server-side: SET GLOBAL local_infile = 1;
 --      (or add `local_infile=1` under [mysqld] in my.cnf to persist
@@ -15,7 +13,7 @@
 USE retail_inventory_db;
 
 -- 1. Load raw CSV into staging, unchanged
-LOAD DATA LOCAL INFILE '/home/claude/retail_inventory_analytics/data/raw/retail_store_inventory.csv'
+LOAD DATA LOCAL INFILE '/data/raw/retail_store_inventory.csv'
 INTO TABLE inventory_raw_staging
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
